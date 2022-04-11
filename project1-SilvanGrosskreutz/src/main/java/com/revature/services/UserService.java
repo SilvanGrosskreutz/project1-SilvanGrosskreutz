@@ -17,9 +17,9 @@ import com.revature.models.User;
  * <ul>
  *     <li>Create User</li>
  *     <li>Update User Information</li>
- *     <li>Get Users by ID</li>
+ *     <li>Get Users by ID</li>				FINISHED
  *     <li>Get Users by Email</li>
- *     <li>Get All Users</li>
+ *     <li>Get All Users</li>			
  * </ul>
  */
 public class UserService {
@@ -55,5 +55,25 @@ public class UserService {
 			} 
 		}
 		return false;
+	}
+	
+	public void printUsers() {
+		for (User user : userList) {
+			System.out.println("User ID: \t" + user.getId());
+			System.out.println("Username: \t" + user.getUsername());
+			System.out.println("Role: \t" + user.getRole());
+			System.out.println("Name: \t" + user.getFirstName() + " " + user.getLastName());
+			System.out.println("E-mail: \t" + user.geteMail());
+		}
+	}
+	
+	public User getUserById(int id) {
+		for (User user : userList) {
+			if(user.getId() == id) {
+				return user;
+			}
+		}
+		System.out.println("User doesn't exist!");
+		return null;
 	}
 }

@@ -37,10 +37,50 @@ public class User extends AbstractUser {
     public User(int id, String username, String password, Role role,
     		String firstName, String lastName, String eMail, String phoneNumber, String address) {
         super(id, username, password, role);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.eMail = eMail;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.seteMail(eMail);
+        this.setPhoneNumber(phoneNumber);
+        this.setAddress(address);
     }
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }
