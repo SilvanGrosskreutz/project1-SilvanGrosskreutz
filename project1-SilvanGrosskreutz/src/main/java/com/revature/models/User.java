@@ -34,6 +34,11 @@ public class User extends AbstractUser {
         super(id, username, password, role);
     }
     
+    public User(int id, String username, String password, Role role, String eMail) {
+        super(id, username, password, role);
+        this.eMail = eMail;
+    }
+    
     public User(int id, String username, String password, Role role,
     		String firstName, String lastName, String eMail, String phoneNumber, String address) {
         super(id, username, password, role);

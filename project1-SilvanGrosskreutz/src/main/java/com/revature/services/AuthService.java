@@ -66,31 +66,23 @@ public class AuthService {
     	List<User> userList = new ArrayList<User>();
     	userList = UserService.getUserList();
     	
-//    	int userID = userList.size();
-//    	Scanner scan = new Scanner(System.in);
-//    	System.out.println("Choose your Username: ");
-//    	String username = scan.nextLine();
-//    	System.out.println("Choose your Password: ");
-//    	String password = scan.nextLine();
-//    	System.out.println("Choose your Role between Employee and Finance Manager: ");
-//    	String role = scan.nextLine();
-//    	// TODO: Fix that the role String converts into a Role & ask if I can change that
-//    	// 		 to create a user with Input
-    	
     	for (User user : userList) {
-    		if(user.getUsername().equals(userToBeRegistered.getUsername()) ||
-    				user.geteMail().equals(userToBeRegistered.geteMail())) {
-    			throw new Exception("Username or E-Mail already exists.");
-    		}
-    		if(user.getId() != 0) {
-    			throw new Exception("The ID is not 0.");
-    		}
-    		if(user.getPassword().equals(null) || user.getRole().equals(null)) {
-    			throw new Exception("You forgot to provide a Password or a Role.");
-    		}
+    		// TODO: Look over the throwing exceptions
+//    		if(user.getUsername().equals(userToBeRegistered.getUsername()) ||
+//    				user.geteMail().equals(userToBeRegistered.geteMail())) {
+//    			throw new Exception("Username or E-Mail already exists.");
+//    		}
+//    		if(user.getId() != 0) {
+//    			throw new Exception("The ID is not 0.");
+//    		}
+//    		if(user.getPassword().equals(null) || user.getRole().equals(null)) {
+//    			throw new Exception("You forgot to provide a Password or a Role.");
+//    		}
 		}
+    	if(userList.isEmpty()) {
+    		userToBeRegistered.setId(1);
+    	}else userToBeRegistered.setId(userList.size());
     	
-    	userToBeRegistered.setId(userList.size());
     	userList.add(userToBeRegistered);
     	System.out.println("User registration successful!");
     	return userToBeRegistered;

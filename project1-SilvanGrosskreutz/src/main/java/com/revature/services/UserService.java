@@ -16,7 +16,7 @@ import com.revature.models.User;
  * Examples:
  * <ul>
  *     <li>Create User</li>					FINISHED
- *     <li>Update User Information</li>
+ *     <li>Update User Information</li>		FINISHED
  *     <li>Get Users by ID</li>				FINISHED
  *     <li>Get Users by Email</li>			FINISHED
  *     <li>Get All Users</li>				FINISHED			
@@ -73,9 +73,10 @@ public class UserService {
 		for (User user : userList) {
 			System.out.println("User ID: \t" + user.getId());
 			System.out.println("Username: \t" + user.getUsername());
-			System.out.println("Role: \t" + user.getRole());
-			System.out.println("Name: \t" + user.getFirstName() + " " + user.getLastName());
+			System.out.println("Role: \t\t" + user.getRole());
+			System.out.println("Name: \t\t" + user.getFirstName() + " " + user.getLastName());
 			System.out.println("E-mail: \t" + user.geteMail());
+			System.out.println("=========================");
 		}
 	}
 	
@@ -110,6 +111,39 @@ public class UserService {
 			+ user.getUsername() 
 			+ ". So you can't change the username!");
 	}
+	
+	public void changePassword(User user, String password) {
+		if(isUser(user)) {
+			user.setPassword(password);
+		} else System.out.println("There is no User with "
+			+ user.getUsername() 
+			+ ". So you can't change the password!");
+	}
+	
+	public void changeRole(User user, Role role) {
+		if(isUser(user)) {
+			user.setRole(role);
+		} else System.out.println("There is no User with "
+			+ user.getUsername() 
+			+ ". So you can't change the role!");
+	}
+	
+	public void changeFirstName(User user, String firstName) {
+		if(isUser(user)) {
+			user.setFirstName(firstName);
+		} else System.out.println("There is no User with the name "
+			+ user.getUsername());
+	}
+	
+	public void changeLastName(User user, String lastName) {
+		if(isUser(user)) {
+			user.setLastName(lastName);
+		} else System.out.println("There is no User with the name "
+			+ user.getUsername());
+	}
+	
+	
+	
 	
 	
 }
