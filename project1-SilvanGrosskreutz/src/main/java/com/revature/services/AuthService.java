@@ -1,7 +1,8 @@
 package com.revature.services;
 
 import com.revature.models.User;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,10 +27,23 @@ public class AuthService {
      *     <li>Should throw exception if the passwords do not match.</li>
      *     <li>Must return user object if the user logs in successfully.</li>
      * </ul>
+     * FINISHED
      */
-    public User login(String username, String password) {
+    public User login(String username, String password) throws Exception {
+    	List<User> userList = new ArrayList<User>();
+    	userList = UserService.getUserList();
+    	
+    	for (User user : userList) {
+    		if(user.getUsername().equals(username) || user.geteMail().equals(username)) {
+    			if (user.getPassword().equals(password)) {
+    				return user;
+				} else throw new Exception("Wrong password.");
+    		} else throw new Exception("Username doesn't exist.");
+		}
+    	
         return null;
     }
+    
 
     /**
      * <ul>
