@@ -18,7 +18,6 @@ public class Driver {
 	    	String username = scan.nextLine();
 	    	System.out.println("Choose your Password: ");
 	    	String password = scan.nextLine();
-	    	// TODO: Change Role to 1 and 2 to simplify
 	    	System.out.println("Choose your Role between Employee(1) and Finance Manager(2): ");
 	    	int role = Integer.valueOf(scan.nextLine());
 	    	Role role1 = null;

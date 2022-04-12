@@ -81,7 +81,7 @@ public class AuthService {
 		}
     	if(userList.isEmpty()) {
     		userToBeRegistered.setId(1);
-    	}else userToBeRegistered.setId(userList.size());
+    	}else userToBeRegistered.setId(userList.size() + 1);
     	
     	userList.add(userToBeRegistered);
     	System.out.println("User registration successful!");
