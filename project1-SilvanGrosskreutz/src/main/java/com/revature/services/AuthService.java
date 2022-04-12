@@ -66,7 +66,7 @@ public class AuthService {
     	List<User> userList = new ArrayList<User>();
     	userList = UserService.getUserList();
     	
-    	for (User user : userList) {
+//    	for (User user : userList) {
     		// TODO: Look over the throwing exceptions
 //    		if(user.getUsername().equals(userToBeRegistered.getUsername()) ||
 //    				user.geteMail().equals(userToBeRegistered.geteMail())) {
@@ -78,7 +78,7 @@ public class AuthService {
 //    		if(user.getPassword().equals(null) || user.getRole().equals(null)) {
 //    			throw new Exception("You forgot to provide a Password or a Role.");
 //    		}
-		}
+//		}
     	if(userList.isEmpty()) {
     		userToBeRegistered.setId(1);
     	}else userToBeRegistered.setId(userList.size() + 1);
@@ -86,6 +86,32 @@ public class AuthService {
     	userList.add(userToBeRegistered);
     	System.out.println("User registration successful!");
     	return userToBeRegistered;
+    }
+    
+    public User infoRegister() {
+    	Scanner scan = new Scanner(System.in);
+    	System.out.println("Choose your E-Mail: ");
+    	String eMail = scan.nextLine();
+    	System.out.println("Choose your Username: ");
+    	String username = scan.nextLine();
+    	System.out.println("Choose your Password: ");
+    	String password = scan.nextLine();
+    	System.out.println("Choose your Role between Employee(1) and Finance Manager(2): ");
+    	int role = Integer.valueOf(scan.nextLine());
+    	Role role1 = null;
+    	if(role == 1) {
+    		role1 = Role.EMPLOYEE;
+    	} else if(role == 2) {
+    		role1 = Role.FINANCE_MANAGER;
+    	}
+    	User user = new User(0,username, password, role1, eMail);
+    	AuthService authService = new AuthService();
+    	try {
+			authService.register(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return user;
     }
 
     /**
