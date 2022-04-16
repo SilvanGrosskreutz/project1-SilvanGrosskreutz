@@ -6,6 +6,7 @@ import com.revature.models.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * The ReimbursementService should handle the submission, processing,
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * Examples:
  * <ul>
- *     <li>Create Reimbursement</li>
+ *     <li>Create Reimbursement</li> 			FINISHED
  *     <li>Update Reimbursement</li>
  *     <li>Get Reimbursements by ID</li>
  *     <li>Get Reimbursements by Author</li>
@@ -25,6 +26,16 @@ import java.util.List;
  * </ul>
  */
 public class ReimbursementService {
+	
+	public Reimbursement createImbursement(User author) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Whats ur id?");
+		int id = Integer.valueOf(scan.nextLine());
+		System.out.println("Whats the amount?");
+		double amount = Double.valueOf(scan.nextLine());
+		Reimbursement reimbursement = new Reimbursement(id, Status.PENDING, author, amount);
+		return reimbursement;
+	}
 
     /**
      * <ul>
@@ -40,7 +51,8 @@ public class ReimbursementService {
      * The Resolver should be null. Additional fields may be null.
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
      */
-    public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
+    public Reimbursement process(Reimbursement unprocessedReimbursement,
+    		Status finalStatus, User resolver) {
         return null;
     }
 

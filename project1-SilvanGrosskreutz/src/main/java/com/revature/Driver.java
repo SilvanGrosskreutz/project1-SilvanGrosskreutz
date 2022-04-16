@@ -2,7 +2,6 @@ package com.revature;
 
 import java.util.Scanner;
 
-import com.revature.models.*;
 import com.revature.services.AuthService;
 import com.revature.services.UserService;
 
@@ -21,6 +20,7 @@ public class Driver {
 	    		looping = false;
 	    	}
     	}
+    	
     	UserService userService = new UserService();
     	userService.printUsers();
     }

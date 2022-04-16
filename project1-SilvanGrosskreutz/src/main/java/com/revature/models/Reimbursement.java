@@ -31,6 +31,12 @@ public class Reimbursement extends AbstractReimbursement {
     public Reimbursement(int id, Status status, User author, User resolver, double amount) {
         super(id, status, author, resolver, amount);
     }
+    
+    
+
+	public Reimbursement(int id, Status status, User author, double amount) {
+		super(id, status, author, amount);
+	}
 
 	public String getDescription() {
 		return description;

@@ -59,7 +59,15 @@ public class AuthServiceTest {
 		when(userService.getByUsername(anyString())).thenReturn(Optional.empty());
 		when(userDAO.create(anyObject())).thenReturn(GENERIC_EMPLOYEE_1);
 		
-		assertEquals(GENERIC_EMPLOYEE_1, authService.register(EMPLOYEE_TO_REGISTER));
+		try {
+			assertEquals(GENERIC_EMPLOYEE_1, authService.register(EMPLOYEE_TO_REGISTER));
+		}catch (UsernameNotUniqueException e) {
+			e.printStackTrace();
+		} catch(NewUserHasNonZeroIdException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 
 		verify(userService).getByUsername(EMPLOYEE_TO_REGISTER.getUsername());
 		verify(userDAO).create(EMPLOYEE_TO_REGISTER);
@@ -87,7 +95,12 @@ public class AuthServiceTest {
 	public void testLoginPassesWhenUsernameDoesExistAndPasswordMatches() {
 		when(userService.getByUsername(anyString())).thenReturn(Optional.of(GENERIC_EMPLOYEE_1));
 
-		assertEquals(GENERIC_EMPLOYEE_1, authService.login(GENERIC_EMPLOYEE_1.getUsername(), GENERIC_EMPLOYEE_1.getPassword()));
+		try {
+			assertEquals(GENERIC_EMPLOYEE_1, authService.login(GENERIC_EMPLOYEE_1.getUsername(), GENERIC_EMPLOYEE_1.getPassword()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		verify(userService).getByUsername(EMPLOYEE_TO_REGISTER.getUsername());
 	}

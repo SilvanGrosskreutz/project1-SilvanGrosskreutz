@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.revature.exceptions.NewUserHasNonZeroIdException;
+import com.revature.exceptions.RegistrationUnsuccessfulException;
+import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.Role;
 import com.revature.models.User;
 
@@ -30,7 +33,7 @@ public class AuthService {
      *     <li>Should throw exception if the passwords do not match.</li>
      *     <li>Must return user object if the user logs in successfully.</li>
      * </ul>
-     * FINISHED
+     * 
      */
     public User login(String username, String password) throws Exception {
     	List<User> userList = new ArrayList<User>();
@@ -66,32 +69,24 @@ public class AuthService {
     	List<User> userList = new ArrayList<User>();
     	userList = UserService.getUserList();
     	
-//    	for (User user : userList) {
-    		// TODO: Look over the throwing exceptions
-//    		if(user.getUsername().equals(userToBeRegistered.getUsername()) ||
-//    				user.geteMail().equals(userToBeRegistered.geteMail())) {
-//    			throw new Exception("Username or E-Mail already exists.");
-//    		}
-//    		if(user.getId() != 0) {
-//    			throw new Exception("The ID is not 0.");
-//    		}
-//    		if(user.getPassword().equals(null) || user.getRole().equals(null)) {
-//    			throw new Exception("You forgot to provide a Password or a Role.");
-//    		}
-//		}
-    	if(userList.isEmpty()) {
-    		userToBeRegistered.setId(1);
-    	}else userToBeRegistered.setId(userList.size() + 1);
-    	
-    	userList.add(userToBeRegistered);
+    	for (User user : userList) {
+			if(userToBeRegistered.getUsername().equals(user.getUsername())) {
+				throw new UsernameNotUniqueException("Username already exists.");
+			}
+		}
+    	if(userToBeRegistered.getId() != 0) {
+    		throw new NewUserHasNonZeroIdException("User has to have a ID of 0.");
+    	}
+    	int n = userList.size() + 1;
+    	User user = new User(n,userToBeRegistered.getUsername(),
+    			userToBeRegistered.getPassword(), userToBeRegistered.getRole());
+    	userList.add(user);
     	System.out.println("User registration successful!");
-    	return userToBeRegistered;
+    	return user;
     }
     
     public User infoRegister() {
     	Scanner scan = new Scanner(System.in);
-    	System.out.println("Choose your E-Mail: ");
-    	String eMail = scan.nextLine();
     	System.out.println("Choose your Username: ");
     	String username = scan.nextLine();
     	System.out.println("Choose your Password: ");
@@ -104,10 +99,14 @@ public class AuthService {
     	} else if(role == 2) {
     		role1 = Role.FINANCE_MANAGER;
     	}
-    	User user = new User(0,username, password, role1, eMail);
+    	User user = new User(0,username, password, role1);
     	AuthService authService = new AuthService();
     	try {
 			authService.register(user);
+		} catch (UsernameNotUniqueException e) {
+			e.printStackTrace();
+		} catch(NewUserHasNonZeroIdException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
