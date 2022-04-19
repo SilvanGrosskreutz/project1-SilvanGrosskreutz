@@ -8,6 +8,7 @@ import java.util.Scanner;
 import com.revature.exceptions.NewUserHasNonZeroIdException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
+import com.revature.exceptions.WrongPasswordOrUsernameException;
 import com.revature.models.Role;
 import com.revature.models.User;
 
@@ -27,11 +28,11 @@ public class AuthService {
 
     /**
      * <ul>
-     *     <li>Needs to check for existing users with username/email provided.</li>
-     *     <li>Must throw exception if user does not exist.</li>
-     *     <li>Must compare password provided and stored password for that user.</li>
-     *     <li>Should throw exception if the passwords do not match.</li>
-     *     <li>Must return user object if the user logs in successfully.</li>
+     *     <li>Needs to check for existing users with username/email provided.</li>		FINISHED
+     *     <li>Must throw exception if user does not exist.</li>						FINISHED
+     *     <li>Must compare password provided and stored password for that user.</li>	FINISHED
+     *     <li>Should throw exception if the passwords do not match.</li>				FINISHED
+     *     <li>Must return user object if the user logs in successfully.</li>			FINISHED
      * </ul>
      * 
      */
@@ -43,8 +44,8 @@ public class AuthService {
     		if(user.getUsername().equals(username) || user.geteMail().equals(username)) {
     			if (user.getPassword().equals(password)) {
     				return user;
-				} else throw new Exception("Wrong password.");
-    		} else throw new Exception("Username doesn't exist.");
+				} else throw new WrongPasswordOrUsernameException("Wrong password.");
+    		} else throw new WrongPasswordOrUsernameException("Username doesn't exist.");
 		}
     	
         return null;
@@ -53,10 +54,10 @@ public class AuthService {
 
     /**
      * <ul>
-     *     <li>Should ensure that the username/email provided is unique.</li> 		FINISHED
+     *     <li>Should ensure that the username/email provided is unique.</li> 		FINISHED	
      *     <li>Must throw exception if the username/email is not unique.</li>		FINISHED
-     *     <li>Should persist the user object upon successful registration.</li>	FINISHED
-     *     <li>Must throw exception if registration is unsuccessful.</li>			FINISHED
+     *     <li>Should persist the user object upon successful registration.</li>	
+     *     <li>Must throw exception if registration is unsuccessful.</li>			
      *     <li>Must return user object if the user registers successfully.</li>		FINISHED
      *     <li>Must throw exception if provided user has a non-zero ID</li>			FINISHED
      * </ul>
