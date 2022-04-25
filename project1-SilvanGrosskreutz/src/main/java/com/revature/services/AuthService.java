@@ -1,16 +1,15 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 import com.revature.exceptions.NewUserHasNonZeroIdException;
-import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.exceptions.WrongPasswordOrUsernameException;
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 
 /**
  * The AuthService should handle login and registration for the ERS application.
@@ -25,6 +24,8 @@ import com.revature.models.User;
  * </ul>
  */
 public class AuthService {
+	
+	private UserDAO userDAO = new UserDAO();
 
     /**
      * <ul>
@@ -36,9 +37,8 @@ public class AuthService {
      * </ul>
      * 
      */
-    public User login(String username, String password) throws Exception {
-    	List<User> userList = new ArrayList<User>();
-    	userList = UserService.getUserList();
+    public User login(String username, String password) throws WrongPasswordOrUsernameException {
+    	List<User> userList = userDAO.getAllUser();
     	
     	for (User user : userList) {
     		if(user.getUsername().equals(username) || user.geteMail().equals(username)) {
@@ -66,9 +66,10 @@ public class AuthService {
      * After registration, the id will be a positive integer.
      * 
      */
+    
+    // TODO: User ID non zero after registration
     public User register(User userToBeRegistered) throws Exception {
-    	List<User> userList = new ArrayList<User>();
-    	userList = UserService.getUserList();
+    	List<User> userList = userDAO.getAllUser();
     	
     	for (User user : userList) {
 			if(userToBeRegistered.getUsername().equals(user.getUsername())) {
@@ -78,10 +79,9 @@ public class AuthService {
     	if(userToBeRegistered.getId() != 0) {
     		throw new NewUserHasNonZeroIdException("User has to have a ID of 0.");
     	}
-    	int n = userList.size() + 1;
-    	User user = new User(n,userToBeRegistered.getUsername(),
+    	User user = new User(0,userToBeRegistered.getUsername(),
     			userToBeRegistered.getPassword(), userToBeRegistered.getRole());
-    	userList.add(user);
+    	userDAO.create(userToBeRegistered);
     	System.out.println("User registration successful!");
     	return user;
     }

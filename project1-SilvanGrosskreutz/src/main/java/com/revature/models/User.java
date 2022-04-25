@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.Objects;
+
 /**
  * This concrete User class can include additional fields that can be used for
  * extended functionality of the ERS application.
@@ -95,4 +97,34 @@ public class User extends AbstractUser {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(address, eMail, firstName, lastName, phoneNumber);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(address, other.address) && Objects.equals(eMail, other.eMail)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(phoneNumber, other.phoneNumber);
+	}
+
+	@Override
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + eMail + ", phoneNumber="
+				+ phoneNumber + ", address=" + address + "]";
+	}
+	
+	
 }
