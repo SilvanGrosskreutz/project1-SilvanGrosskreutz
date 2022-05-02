@@ -36,7 +36,7 @@ public class ReimbursementService {
 	
 	public Reimbursement createImbursement(User author) {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Whats the Reimbusments ID?");
+		System.out.println("Whats the Reimbursements ID?");
 		int id = Integer.valueOf(scan.nextLine());
 		System.out.println("Whats the amount?");
 		double amount = Double.valueOf(scan.nextLine());

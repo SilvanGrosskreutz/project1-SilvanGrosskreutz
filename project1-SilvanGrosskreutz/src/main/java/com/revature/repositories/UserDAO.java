@@ -160,7 +160,6 @@ public class UserDAO {
 			statement.setString(++count, user.getAddress());
 			statement.setString(++count, user.getUsername());
 			
-			
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
