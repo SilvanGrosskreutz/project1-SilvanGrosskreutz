@@ -43,7 +43,6 @@ public class UserDAO {
 				user.setLastName(result.getString("user_last_name"));
 				user.seteMail(result.getString("user_email"));
 				user.setPhoneNumber(result.getString("user_phonenumber"));
-				user.setAddress(result.getString("user_addr"));
 				return Optional.of(user);
 			}
 		} catch (SQLException e) {
@@ -67,16 +66,15 @@ public class UserDAO {
 				user.setId(result.getInt("user_id"));
 				user.setUsername(result.getString("user_name"));
 				user.setPassword(result.getString("user_password"));
-				if(result.getString("user_role").equals("FINANCE_MANAGER")) {
+				if(result.getString("user_role").equals("Finance Manager")) {
 					user.setRole(Role.FINANCE_MANAGER);
-				} else if (result.getString("user_role").equals("EMPLOYEE")) {
+				} else if (result.getString("user_role").equals("Employee")) {
 					user.setRole(Role.EMPLOYEE);
 				}
 				user.setFirstName(result.getString("user_first_name"));
 				user.setLastName(result.getString("user_last_name"));
 				user.seteMail(result.getString("user_email"));
 				user.setPhoneNumber(result.getString("user_phonenumber"));
-				user.setAddress(result.getString("user_addr"));
 				
 				userList.add(user);
 			}
@@ -102,8 +100,8 @@ public class UserDAO {
     public User create(User userToBeRegistered) {
     	try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String sql = "INSERT INTO users (user_name, user_password, user_role, user_first_name,"
-					+ " user_last_name, user_email, user_phonenumber, user_addr) VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?, ?);";
+					+ " user_last_name, user_email, user_phonenumber) VALUES "
+					+ "(?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			int count = 0;
@@ -115,7 +113,6 @@ public class UserDAO {
 			statement.setString(++count, userToBeRegistered.getLastName());
 			statement.setString(++count, userToBeRegistered.geteMail());
 			statement.setString(++count, userToBeRegistered.getPhoneNumber());
-			statement.setString(++count, userToBeRegistered.getAddress());
 			
 			statement.execute();
 			return userToBeRegistered;
@@ -145,8 +142,7 @@ public class UserDAO {
 			String sql = "UPDATE users SET user_password = ?,"
 					+ " user_role = ?, user_first_name = ?,"
 					+ " user_last_name = ?, user_email = ?, user_phonenumber = ?,"
-					+ " user_addr = ?"
-					+ " WHERE home_name = ?;";
+					+ " WHERE user_name = ?;";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			int count = 0;
@@ -157,7 +153,6 @@ public class UserDAO {
 			statement.setString(++count, user.getLastName());
 			statement.setString(++count, user.geteMail());
 			statement.setString(++count, user.getPhoneNumber());
-			statement.setString(++count, user.getAddress());
 			statement.setString(++count, user.getUsername());
 			
 			statement.execute();

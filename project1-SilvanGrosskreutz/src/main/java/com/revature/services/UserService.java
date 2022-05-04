@@ -41,8 +41,8 @@ public class UserService {
 	}
 
 	public void createUser(int id, String username, String password, Role role, String firstName, String lastName,
-			String eMail, String phoneNumber, String address) {
-		User user = new User(id, username, password, role, firstName, lastName, eMail, phoneNumber, address);
+			String eMail, String phoneNumber) {
+		User user = new User(id, username, password, role, firstName, lastName, eMail, phoneNumber);
 		if (!user.equals(null)) {
 			userDAO.create(user);
 		} else {
@@ -66,6 +66,14 @@ public class UserService {
 	
 	public void updateUser(User user) {
 		userDAO.updateUser(user);
+	}
+
+	public void createUser(User user) {
+		if (!user.equals(null)) {
+			userDAO.create(user);
+		} else {
+			System.out.println("Something went wrong with the Creation of a new User.");
+		}
 	}
 
 }

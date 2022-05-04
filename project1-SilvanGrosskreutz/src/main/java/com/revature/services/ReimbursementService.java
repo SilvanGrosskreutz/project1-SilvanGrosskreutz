@@ -7,6 +7,7 @@ import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,16 +33,17 @@ import java.util.Scanner;
  */
 public class ReimbursementService {
 	
-	public static List<Reimbursement> reimbursementList = new ArrayList<Reimbursement>();
+	private ReimbursementDAO reimDAO = new ReimbursementDAO();
 	
-	public Reimbursement createImbursement(User author) {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Whats the Reimbursements ID?");
-		int id = Integer.valueOf(scan.nextLine());
-		System.out.println("Whats the amount?");
-		double amount = Double.valueOf(scan.nextLine());
-		Reimbursement reimbursement = new Reimbursement(id, Status.PENDING, author, amount);
-		return reimbursement;
+	public Reimbursement createReimbursement(User author, double amount) {
+		Reimbursement reim = new Reimbursement(0, Status.PENDING, author, null, amount);
+		reimDAO.createReimbursement(reim);
+		return reim;
+	}
+	
+	public Reimbursement createReimbursement(Reimbursement reim) {
+		reimDAO.createReimbursement(reim);
+		return reim;	
 	}
 
     /**
@@ -61,19 +63,12 @@ public class ReimbursementService {
      */
     public Reimbursement process(Reimbursement unprocessedReimbursement,
     		Status finalStatus, User resolver) throws Exception {
-    	boolean check = false;
     	
     	if(!resolver.getRole().equals(Role.FINANCE_MANAGER)){
     		throw new UserIsNotFinanceManagerException("User not logged in as Finance Manager!");
     	}
     	
-    	for (Reimbursement reimbursement : reimbursementList) {
-    		if(unprocessedReimbursement.equals(reimbursement)) {
-    			check = true;
-    		} 
-		}
-    	
-    	if(check == false) {
+    	if(reimDAO.getById(unprocessedReimbursement.getId()).equals(null)) {
     		throw new ReimbursementNotFoundException("Reimbursement request not in the list.");
     	}
     	
@@ -109,44 +104,42 @@ public class ReimbursementService {
     		System.out.println("Input ID should be non-zero and positive.");
     		return null;
     	}
-    	for (Reimbursement reimbursement : reimbursementList) {
-			if(reimbursement.getId() == id) {
-				return reimbursement;
-			}
-		}	
-    	return null;
+    	Reimbursement reim = reimDAO.getById(id).get();
+    	return reim;
     }
     
-    public Reimbursement getReimbursementByAuthor(User author){
+    public List<Reimbursement> getReimbursementByAuthor(User author){
     	if(author.equals(null)) {
     		System.out.println("The Author you are searching for should be not null.");
     		return null;
     	}
-    	for (Reimbursement reimbursement : reimbursementList) {
-			if(reimbursement.getAuthor().equals(author)) {
-				return reimbursement;
-			}
-		}	
-    	return null;
+    	List<Reimbursement> reim = reimDAO.getByAuthor(author);
+    	return reim;
     }
     
-    public Reimbursement getReimbursementByResolver(User resolver){
+    public List<Reimbursement> getReimbursementByResolver(User resolver){
     	if(resolver.equals(null)) {
     		System.out.println("The Resolver you are searching for should be not null.");
     		return null;
     	}
-    	for (Reimbursement reimbursement : reimbursementList) {
-			if(reimbursement.getResolver().equals(resolver)) {
-				return reimbursement;
-			}
-		}	
-    	return null;
+    	List<Reimbursement> reim = reimDAO.getByResolver(resolver);
+    	return reim;
     }
 
     /**
      * Should retrieve all reimbursements with the correct status.
      */
     public List<Reimbursement> getReimbursementsByStatus(Status status) {
-        return Collections.emptyList();
+    	List<Reimbursement> list = reimDAO.getByStatus(status);
+        return list;
     }
+    
+    public List<Reimbursement> getAllReimbursements(){
+    	List<Reimbursement> list = reimDAO.getAllReimbursements();
+    	return list;
+    }
+
+	
+
+
 }

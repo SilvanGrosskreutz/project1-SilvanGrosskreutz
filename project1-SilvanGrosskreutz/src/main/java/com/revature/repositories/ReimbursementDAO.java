@@ -2,6 +2,7 @@ package com.revature.repositories;
 
 import com.revature.exceptions.ReimbursementUpdateFailed;
 import com.revature.models.Reimbursement;
+import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -132,5 +134,139 @@ public class ReimbursementDAO {
 			e.printStackTrace();
 		}
     	return null;
+    }
+    
+    public Reimbursement createReimbursement(Reimbursement reim) {
+    	try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "INSERT INTO reimbursement (reim_status, reim_author,"
+					+ " reim_amount) VALUES "
+					+ "(?, ?, ?);";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			int count = 0;
+			
+			statement.setString(++count, String.valueOf(reim.getStatus()));
+			statement.setString(++count, String.valueOf(reim.getAuthor()));
+			statement.setDouble(++count, reim.getAmount());
+			
+			statement.execute();
+			return reim;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+    	return null;
+    }
+
+	public List<Reimbursement> getByAuthor(User author) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "SELECT * FROM reimbursement WHERE reim_author = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, author.getUsername());
+			
+			ResultSet result = statement.executeQuery();
+			
+			List<Reimbursement> reimList = new ArrayList<Reimbursement>();
+			
+			while(result.next()) {
+				Reimbursement reim = new Reimbursement();
+				reim.setId(result.getInt("reim_id"));
+				if(result.getString("reim_status").equals("PENDING")) {
+					reim.setStatus(Status.PENDING);
+				} else if(result.getString("reim_status").equals("APPROVED")) {
+					reim.setStatus(Status.APPROVED);
+				} else if(result.getString("reim_status").equals("DENIED")) {
+					reim.setStatus(Status.DENIED);
+				}
+				Optional<User> author1 = userDAO.getByUsername(result.getString("reim_author"));
+				reim.setAuthor(author1.get());
+				
+				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
+				reim.setResolver(resolver.get());
+				
+				reim.setAmount(result.getDouble("reim_amount"));
+				reimList.add(reim);
+			}
+			return reimList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return new ArrayList<Reimbursement>();
+	}
+
+	public List<Reimbursement> getByResolver(User resolver) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "SELECT * FROM reimbursement WHERE reim_author = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, resolver.getUsername());
+			
+			ResultSet result = statement.executeQuery();
+			
+			List<Reimbursement> reimList = new ArrayList<Reimbursement>();
+			
+			while(result.next()) {
+				Reimbursement reim = new Reimbursement();
+				reim.setId(result.getInt("reim_id"));
+				if(result.getString("reim_status").equals("PENDING")) {
+					reim.setStatus(Status.PENDING);
+				} else if(result.getString("reim_status").equals("APPROVED")) {
+					reim.setStatus(Status.APPROVED);
+				} else if(result.getString("reim_status").equals("DENIED")) {
+					reim.setStatus(Status.DENIED);
+				}
+				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
+				reim.setAuthor(author.get());
+				
+				Optional<User> resolver1 = userDAO.getByUsername(result.getString("reim_resolver"));
+				reim.setResolver(resolver1.get());
+				
+				reim.setAmount(result.getDouble("reim_amount"));
+				reimList.add(reim);
+			}
+			return reimList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return new ArrayList<Reimbursement>();
+	}
+	
+	public List<Reimbursement> getAllReimbursements(){
+	    try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String sql = "SELECT * FROM reimbursement;";
+			
+			Statement statement = conn.createStatement();
+			
+			ResultSet result = statement.executeQuery(sql);
+			
+			List<Reimbursement> reimList = new ArrayList<>();
+			
+			while(result.next()) {
+				Reimbursement reim = new Reimbursement();
+				reim.setId(result.getInt("reim_id"));
+				if(result.getString("reim_status").equals("PENDING")) {
+					reim.setStatus(Status.PENDING);
+				} else if(result.getString("reim_status").equals("APPROVED")) {
+					reim.setStatus(Status.APPROVED);
+				} else if(result.getString("reim_status").equals("DENIED")) {
+					reim.setStatus(Status.DENIED);
+				}
+				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
+				reim.setAuthor(author.get());
+				
+				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
+				reim.setResolver(resolver.get());
+				
+				reim.setAmount(result.getDouble("reim_amount"));
+				reimList.add(reim);
+			}
+			return reimList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 }

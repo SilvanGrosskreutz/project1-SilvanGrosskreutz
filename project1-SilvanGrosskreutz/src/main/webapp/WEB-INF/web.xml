@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<display-name>UserServlets</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<description></description> <!-- optional tag -->
+		<display-name>UserServlet</display-name> <!-- optional tag -->
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.revature.controllers.UserServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description> <!-- optional tag -->
+		<display-name>ReimServlet</display-name> <!-- optional tag -->
+		<servlet-name>ReimServlet</servlet-name>
+		<servlet-class>com.revature.controllers.ReimServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ReimServlet</servlet-name>
+		<url-pattern>/reim/*</url-pattern>
+	</servlet-mapping>
+</web-app>
