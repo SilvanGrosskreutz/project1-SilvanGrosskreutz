@@ -25,7 +25,7 @@ import com.revature.repositories.UserDAO;
  */
 public class UserService {
 
-	private UserDAO userDAO = new UserDAO();
+	protected UserDAO userDAO = new UserDAO();
 
 	/**
 	 * Should retrieve a User with the corresponding username or an empty optional
