@@ -1,6 +1,7 @@
 let tbody = document.getElementById("userBody");
 let userButton = document.getElementById("getUsers");
 let newUserBtn = document.getElementById("userBtn");
+let newFmBtn = document.getElementById("fmBtn");
 
 userButton.addEventListener("click",fetchUsers);
 
@@ -64,4 +65,41 @@ function gatherUser(){
             phoneNumber: phoneNumber
         }
     return user;
+}
+
+newFmBtn.onclick=addFm;
+
+async function addFm(){
+    let fm = gatherFm();
+
+    let response = await fetch("http://localhost:8080/project/user", {
+        method:"POST",
+        body: JSON.stringify(fm) // Takes a JS Object and changes to JSON
+    });
+
+    if(response.status === 201){
+        console.log("User added successfully.")
+    }else{
+        console.log("Something went wrong adding the User.");
+        console.log(response);
+    }
+}
+
+function gatherFm(){
+    let userName = document.getElementById("userName1").value;
+    let userPassword = document.getElementById("userPassword1").value;
+    let firstname = document.getElementById("firstname1").value;
+    let lastname = document.getElementById("lastname1").value;
+    let eMail = document.getElementById("eMail1").value;
+    let phoneNumber = document.getElementById("phoneNumber1").value;
+    let fm = {
+            username: userName,
+            password: userPassword,
+            role: "Finance_Manager",
+            firstName: firstname,
+            lastName: lastname,
+            eMail: eMail,
+            phoneNumber: phoneNumber
+        }
+    return fm;
 }

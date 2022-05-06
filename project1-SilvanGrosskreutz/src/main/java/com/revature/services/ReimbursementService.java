@@ -42,6 +42,7 @@ public class ReimbursementService {
 	}
 	
 	public Reimbursement createReimbursement(Reimbursement reim) {
+		reim.setStatus(Status.PENDING);		
 		reimDAO.createReimbursement(reim);
 		return reim;	
 	}

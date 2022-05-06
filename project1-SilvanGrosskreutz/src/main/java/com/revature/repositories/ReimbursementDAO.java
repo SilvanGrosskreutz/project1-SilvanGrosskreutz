@@ -251,11 +251,12 @@ public class ReimbursementDAO {
 				} else if(result.getString("reim_status").equals("DENIED")) {
 					reim.setStatus(Status.DENIED);
 				}
-				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
-				reim.setAuthor(author.get());
 				
-				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-				reim.setResolver(resolver.get());
+//				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
+//				reim.setAuthor(author.get());
+//				
+//				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
+//				reim.setResolver(resolver.get());
 				
 				reim.setAmount(result.getDouble("reim_amount"));
 				reimList.add(reim);
