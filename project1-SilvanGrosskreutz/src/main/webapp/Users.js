@@ -50,8 +50,6 @@ async function addUser(){
 function gatherUser(){
     let userName = document.getElementById("userName").value;
     let userPassword = document.getElementById("userPassword").value;
-    let userRole = document.querySelector('input[name="userRole"]:checked').value;
-    console.log(userRole);
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
     let eMail = document.getElementById("eMail").value;
@@ -59,7 +57,7 @@ function gatherUser(){
     let user = {
             username: userName,
             password: userPassword,
-            role: userRole,
+            role: "EMPLOYEE",
             firstName: firstname,
             lastName: lastname,
             eMail: eMail,

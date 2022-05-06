@@ -8,6 +8,50 @@
 </head>
 <body>
     <div>
+        <h3 style="text-decoration: underline";>Login</h3>
+        <form action="login" method="post">
+            <table>
+                <tr>
+                    <td><input type="text" name="userId"
+                        placeholder="ENTER USERNAME"></td>
+                </tr>
+                <tr>
+                    <td><input type="password" name="password"
+                        placeholder="ENTER PASSWORD"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="login"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h2>Registration as a Employee:</h2>
+        <form>
+            <label for="userName">What is your Username?</label>
+            <input type="text" name="userName" id="userName">
+            <br>
+            <label for="userPassword">Choose your password</label>
+            <input type="text" name="userPassword" id="userPassword">
+            <br>
+            <label for="firstname">First Name</label>
+            <input type="text" name="firstname" id="firstname">
+            <br>
+            <label for="lastname">Last Name</label>
+            <input type="text" name="lastname" id="lastname">
+            <br>
+            <label for="eMail">E-Mail Address</label>
+            <input type="text" name="eMail" id="eMail">
+            <br>
+            <label for="phoneNumber">Phonenumber</label>
+            <input type="text" name="phoneNumber" id="phoneNumber">
+            <br>
+        </form>
+        <button id="userBtn">Register as a new User</button>
+    </div>
+    <div>
         <table>
             <thead>
                 <tr>
@@ -27,35 +71,6 @@
         <br>
         <br>
         <button id="getUsers">Click here to Show all Users</button>
-    </div>
-    <div>
-        <h2>Add a User:</h2>
-        <form>
-            <label for="userName">What is your Username?</label>
-            <input type="text" name="userName" id="userName">
-            <br>
-            <label for="userPassword">Choose your password</label>
-            <input type="text" name="userPassword" id="userPassword">
-            <br>
-            <input type="radio" id="employee" name="userRole" value="Employee">
-            <label for="employee">Employee</label> 
-            <input type="radio" id="finance_manager" name="userRole" value="Finance Manager">
-            <label for="finance_manager">Finance Manager</label>
-            <br>
-            <label for="firstname">First Name</label>
-            <input type="text" name="firstname" id="firstname">
-            <br>
-            <label for="lastname">Last Name</label>
-            <input type="text" name="lastname" id="lastname">
-            <br>
-            <label for="eMail">E-Mail Address</label>
-            <input type="text" name="eMail" id="eMail">
-            <br>
-            <label for="phoneNumber">Phonenumber</label>
-            <input type="text" name="phoneNumber" id="phoneNumber">
-            <br>
-        </form>
-        <button id="userBtn">Add New User</button>
     </div>
     
     <script src="Users.js"></script>    

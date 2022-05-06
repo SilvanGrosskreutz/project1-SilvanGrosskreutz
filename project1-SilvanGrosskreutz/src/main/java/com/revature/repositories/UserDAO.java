@@ -38,9 +38,9 @@ public class UserDAO {
 				user.setId(result.getInt("user_id"));
 				user.setUsername(result.getString("user_name"));
 				user.setPassword(result.getString("user_password"));
-				if(result.getString("user_role").equals("FINANCE_MANAGER")) {
+				if(result.getString("user_role").equalsIgnoreCase("FINANCE_MANAGER")) {
 					user.setRole(Role.FINANCE_MANAGER);
-				} else if (result.getString("user_role").equals("EMPLOYEE")) {
+				} else if (result.getString("user_role").equalsIgnoreCase("EMPLOYEE")) {
 					user.setRole(Role.EMPLOYEE);
 				}
 				user.setFirstName(result.getString("user_first_name"));
@@ -70,9 +70,9 @@ public class UserDAO {
 				user.setId(result.getInt("user_id"));
 				user.setUsername(result.getString("user_name"));
 				user.setPassword(result.getString("user_password"));
-				if(result.getString("user_role").equals("Finance Manager")) {
+				if(result.getString("user_role").equalsIgnoreCase("Finance Manager")) {
 					user.setRole(Role.FINANCE_MANAGER);
-				} else if (result.getString("user_role").equals("Employee")) {
+				} else if (result.getString("user_role").equalsIgnoreCase("Employee")) {
 					user.setRole(Role.EMPLOYEE);
 				}
 				user.setFirstName(result.getString("user_first_name"));

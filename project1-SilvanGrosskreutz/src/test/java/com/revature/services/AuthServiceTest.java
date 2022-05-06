@@ -89,12 +89,9 @@ public class AuthServiceTest {
 	public void testLoginPassesWhenUsernameDoesExistAndPasswordMatches() {
 		when(userService.getByUsername(anyString())).thenReturn(Optional.of(GENERIC_EMPLOYEE_1));
 
-		try {
-			assertEquals(GENERIC_EMPLOYEE_1, authService.login(GENERIC_EMPLOYEE_1.getUsername(), GENERIC_EMPLOYEE_1.getPassword()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		assertEquals(GENERIC_EMPLOYEE_1, authService.login(GENERIC_EMPLOYEE_1.getUsername(), GENERIC_EMPLOYEE_1.getPassword()));
+		
 
 		verify(userService).getByUsername(EMPLOYEE_TO_REGISTER.getUsername());
 	}
