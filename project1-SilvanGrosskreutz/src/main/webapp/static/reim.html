@@ -4,32 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Interface</title>
+    <title>Reimbursement Interface</title>
 </head>
 <body>
     <div>
         <table>
             <thead>
                 <tr>
-                    <th>User ID</th>
-                    <th>User Name</th>
-                    <th>User Password</th>
-                    <th>User Role</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>E-Mail</th>
-                    <th>Phonenumber</th>
+                    <th>Reimbursement ID</th>
+                    <th>Status</th>
+                    <th>Author Name</th>
+                    <th>Resolver Name</th>
+                    <th>Amount</th>
                 </tr>
             </thead>
-            <tbody id="userBody">
+            <tbody id="reimBody">
             </tbody>
         </table>
         <br>
         <br>
-        <button id="getUsers">Click here to Show all Users</button>
+        <button id="getReims">Click here to Show all Reims</button>
     </div>
     <div>
-        <h2>Add a User:</h2>
+        <h2>Add a Reimbursement:</h2>
         <form>
             <label for="userName">What is your Username?</label>
             <input type="text" name="userName" id="userName">

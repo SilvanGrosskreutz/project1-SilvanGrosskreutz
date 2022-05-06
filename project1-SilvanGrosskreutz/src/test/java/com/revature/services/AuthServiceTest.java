@@ -55,19 +55,13 @@ public class AuthServiceTest {
 	}
 
 	@Test
-	public void testRegisterPassesWhenUsernameIsNotTaken() {
+	public void testRegisterPassesWhenUsernameIsNotTaken() throws Exception {
 		when(userService.getByUsername(anyString())).thenReturn(Optional.empty());
 		when(userDAO.create(anyObject())).thenReturn(GENERIC_EMPLOYEE_1);
 		
-		try {
-			assertEquals(GENERIC_EMPLOYEE_1, authService.register(EMPLOYEE_TO_REGISTER));
-		}catch (UsernameNotUniqueException e) {
-			e.printStackTrace();
-		} catch(NewUserHasNonZeroIdException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		
+		assertEquals(GENERIC_EMPLOYEE_1, authService.register(EMPLOYEE_TO_REGISTER));
+		
 
 		verify(userService).getByUsername(EMPLOYEE_TO_REGISTER.getUsername());
 		verify(userDAO).create(EMPLOYEE_TO_REGISTER);

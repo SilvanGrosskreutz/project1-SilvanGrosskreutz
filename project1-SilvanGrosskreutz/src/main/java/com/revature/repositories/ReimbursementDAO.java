@@ -1,8 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.exceptions.ReimbursementUpdateFailed;
 import com.revature.models.Reimbursement;
-import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -111,7 +109,7 @@ public class ReimbursementDAO {
      *     <li>Should return a Reimbursement object with updated information.</li>
      * </ul>
      */
-    public Reimbursement update(Reimbursement unprocessedReimbursement) throws ReimbursementUpdateFailed {
+    public Reimbursement update(Reimbursement unprocessedReimbursement){
     	try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String sql = "UPDATE reimbursement SET reim_status = ?,"
 					+ " reim_author = ?, reim_resolver = ?,"

@@ -3,6 +3,9 @@ package com.revature.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.exceptions.NewUserHasNonZeroIdException;
+import com.revature.exceptions.RegistrationUnsuccessfulException;
+import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
@@ -40,25 +43,10 @@ public class UserService {
 		return userDAO.getByUsername(username);
 	}
 
-	public void createUser(int id, String username, String password, Role role, String firstName, String lastName,
-			String eMail, String phoneNumber) {
-		User user = new User(id, username, password, role, firstName, lastName, eMail, phoneNumber);
-		if (!user.equals(null)) {
-			userDAO.create(user);
-		} else {
-			System.out.println("Something went wrong with the Creation of a new User.");
-		}
-
+	public void createUser(User user) {	
+		userDAO.create(user);	
 	}
 
-	public void createUser(int id, String username, String password, Role role) {
-		User user = new User(id, username, password, role);
-		if (!user.equals(null)) {
-			userDAO.create(user);
-		} else {
-			System.out.println("Something went wrong with the Creation of a new User.");
-		}
-	}
 	
 	public void deleteUser(String username) {
 		userDAO.deleteUser(username);
@@ -68,12 +56,6 @@ public class UserService {
 		userDAO.updateUser(user);
 	}
 
-	public void createUser(User user) {
-		if (!user.equals(null)) {
-			userDAO.create(user);
-		} else {
-			System.out.println("Something went wrong with the Creation of a new User.");
-		}
-	}
+	
 
 }

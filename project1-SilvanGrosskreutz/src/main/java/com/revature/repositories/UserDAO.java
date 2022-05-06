@@ -1,6 +1,9 @@
 package com.revature.repositories;
 
 
+import com.revature.exceptions.NewUserHasNonZeroIdException;
+import com.revature.exceptions.RegistrationUnsuccessfulException;
+import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAO {
+	
 
     /**
      * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
@@ -115,7 +119,7 @@ public class UserDAO {
 			statement.setString(++count, userToBeRegistered.getPhoneNumber());
 			
 			statement.execute();
-			return userToBeRegistered;
+			return getByUsername(userToBeRegistered.getUsername()).get();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 

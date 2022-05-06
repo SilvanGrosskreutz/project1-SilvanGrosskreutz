@@ -11,8 +11,6 @@
 	</welcome-file-list>
 
 	<servlet>
-		<description></description> <!-- optional tag -->
-		<display-name>UserServlet</display-name> <!-- optional tag -->
 		<servlet-name>UserServlet</servlet-name>
 		<servlet-class>com.revature.controllers.UserServlet</servlet-class>
 	</servlet>
@@ -23,8 +21,6 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<description></description> <!-- optional tag -->
-		<display-name>ReimServlet</display-name> <!-- optional tag -->
 		<servlet-name>ReimServlet</servlet-name>
 		<servlet-class>com.revature.controllers.ReimServlet</servlet-class>
 	</servlet>

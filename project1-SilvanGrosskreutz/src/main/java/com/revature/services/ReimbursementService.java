@@ -33,7 +33,7 @@ import java.util.Scanner;
  */
 public class ReimbursementService {
 	
-	private ReimbursementDAO reimDAO = new ReimbursementDAO();
+	protected ReimbursementDAO reimDAO = new ReimbursementDAO();
 	
 	public Reimbursement createReimbursement(User author, double amount) {
 		Reimbursement reim = new Reimbursement(0, Status.PENDING, author, null, amount);
@@ -59,10 +59,10 @@ public class ReimbursementService {
      * Note: unprocessedReimbursement will have a status of PENDING, a non-zero ID and amount, and a non-null Author.
      * The Resolver should be null. Additional fields may be null.
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
-     * @throws Exception 
+     * 
      */
     public Reimbursement process(Reimbursement unprocessedReimbursement,
-    		Status finalStatus, User resolver) throws Exception {
+    		Status finalStatus, User resolver){
     	
     	if(!resolver.getRole().equals(Role.FINANCE_MANAGER)){
     		throw new UserIsNotFinanceManagerException("User not logged in as Finance Manager!");
@@ -75,26 +75,6 @@ public class ReimbursementService {
     	if(unprocessedReimbursement.getResolver().equals(null)) {
     		unprocessedReimbursement.setResolver(resolver);
     	} else throw new ResolverIsNullException("Resolver is not null. Persistence unsuccessful");
-    	
-    	Scanner scan = new Scanner(System.in);
-    	System.out.println("Do you want to accept(1) or deny(2) the request?");
-    	int answer = Integer.valueOf(scan.nextLine());
-    	boolean request = true;
-    	while(request) {
-	    	switch (answer) {
-			case 1:
-				unprocessedReimbursement.setStatus(Status.APPROVED);
-				request = false;
-				break;
-			case 2:
-				unprocessedReimbursement.setStatus(Status.DENIED);
-				request = false;
-				break;
-			default:
-				System.out.println("Invalid input. Try again to accept(1) or deny(2) the request!");
-				break;
-			}
-    	}
     	
         return unprocessedReimbursement;
     }

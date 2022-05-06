@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.revature.exceptions.NewUserHasNonZeroIdException;
+import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.exceptions.WrongPasswordOrUsernameException;
 import com.revature.models.Role;
@@ -25,7 +26,7 @@ import com.revature.repositories.UserDAO;
  */
 public class AuthService {
 	
-	private UserDAO userDAO = new UserDAO();
+	protected UserDAO userDAO = new UserDAO();
 
     /**
      * <ul>
@@ -37,7 +38,7 @@ public class AuthService {
      * </ul>
      * 
      */
-    public User login(String username, String password) throws WrongPasswordOrUsernameException {
+    public User login(String username, String password){
     	List<User> userList = userDAO.getAllUser();
     	
     	for (User user : userList) {
@@ -68,51 +69,22 @@ public class AuthService {
      */
     
     // TODO: User ID non zero after registration
-    public User register(User userToBeRegistered) throws Exception {
-    	List<User> userList = userDAO.getAllUser();
-    	
-    	for (User user : userList) {
-			if(userToBeRegistered.getUsername().equals(user.getUsername())) {
-				throw new UsernameNotUniqueException("Username already exists.");
-			}
-		}
+    public User register(User userToBeRegistered){
     	if(userToBeRegistered.getId() != 0) {
-    		throw new NewUserHasNonZeroIdException("User has to have a ID of 0.");
-    	}
-    	User user = new User(0,userToBeRegistered.getUsername(),
-    			userToBeRegistered.getPassword(), userToBeRegistered.getRole());
+			throw new NewUserHasNonZeroIdException("User should have a ID of zero!");
+		}
+		if(!userDAO.getByUsername(userToBeRegistered.getUsername()).equals(Optional.empty())) {
+			throw new UsernameNotUniqueException("Username has to be unique!");
+		}
+		if(userToBeRegistered.equals(null)) {
+			throw new RegistrationUnsuccessfulException();
+		}
     	userDAO.create(userToBeRegistered);
     	System.out.println("User registration successful!");
-    	return user;
+    	return userDAO.getByUsername(userToBeRegistered.getUsername()).get();
     }
     
-    public User infoRegister() {
-    	Scanner scan = new Scanner(System.in);
-    	System.out.println("Choose your Username: ");
-    	String username = scan.nextLine();
-    	System.out.println("Choose your Password: ");
-    	String password = scan.nextLine();
-    	System.out.println("Choose your Role between Employee(1) and Finance Manager(2): ");
-    	int role = Integer.valueOf(scan.nextLine());
-    	Role role1 = null;
-    	if(role == 1) {
-    		role1 = Role.EMPLOYEE;
-    	} else if(role == 2) {
-    		role1 = Role.FINANCE_MANAGER;
-    	}
-    	User user = new User(0,username, password, role1);
-    	AuthService authService = new AuthService();
-    	try {
-			authService.register(user);
-		} catch (UsernameNotUniqueException e) {
-			e.printStackTrace();
-		} catch(NewUserHasNonZeroIdException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	return user;
-    }
+
 
     /**
      * This is an example method signature for retrieving the currently logged-in user.
