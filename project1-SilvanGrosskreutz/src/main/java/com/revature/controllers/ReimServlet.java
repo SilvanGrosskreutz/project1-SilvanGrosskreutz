@@ -9,17 +9,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 import com.revature.services.ReimbursementService;
+import com.revature.services.UserService;
 
 
 public class ReimServlet extends HttpServlet{
 	
 	private ReimbursementService reimService = new ReimbursementService();
+	private UserService userService = new UserService();
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
 	@Override
@@ -71,6 +75,10 @@ public class ReimServlet extends HttpServlet{
 		String body = new String(stringBuilder);
 		
 		Reimbursement reim = objectMapper.readValue(body, Reimbursement.class);
+		
+		HttpSession session = req.getSession(false);
+		String username = (String)session.getAttribute("username");
+		reim.setAuthor(userService.getByUsername(username).get());
 		
 		if(!reim.equals(null)) {
 			reimService.createReimbursement(reim);

@@ -50,4 +50,14 @@
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>FinanceManagerServlet</servlet-name>
+		<servlet-class>com.revature.controllers.FinanceManagerServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FinanceManagerServlet</servlet-name>
+		<url-pattern>/finance/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

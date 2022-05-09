@@ -2,6 +2,7 @@ package com.revature.repositories;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
+import com.revature.models.Type;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
@@ -44,7 +45,19 @@ public class ReimbursementDAO {
 				reim.setAuthor(author.get());
 				
 				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-				reim.setResolver(resolver.get());
+				if(!resolver.equals(Optional.empty())) {
+					reim.setResolver(resolver.get());
+				}
+				
+				if(result.getString("reim_type").equalsIgnoreCase("FOOD")) {
+					reim.setType(Type.FOOD);
+				} else if(result.getString("reim_type").equalsIgnoreCase("TRAVEL")) {
+					reim.setType(Type.TRAVEL);
+				} else if(result.getString("reim_type").equalsIgnoreCase("LODGING")) {
+					reim.setType(Type.LODGING);
+				} else if(result.getString("reim_type").equalsIgnoreCase("OTHER")) {
+					reim.setType(Type.OTHER);
+				}
 				
 				reim.setAmount(result.getDouble("reim_amount"));
 				return Optional.of(reim);
@@ -90,7 +103,19 @@ public class ReimbursementDAO {
 				reim.setAuthor(author.get());
 				
 				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-				reim.setResolver(resolver.get());
+				if(!resolver.equals(Optional.empty())) {
+					reim.setResolver(resolver.get());
+				}
+				
+				if(result.getString("reim_type").equalsIgnoreCase("FOOD")) {
+					reim.setType(Type.FOOD);
+				} else if(result.getString("reim_type").equalsIgnoreCase("TRAVEL")) {
+					reim.setType(Type.TRAVEL);
+				} else if(result.getString("reim_type").equalsIgnoreCase("LODGING")) {
+					reim.setType(Type.LODGING);
+				} else if(result.getString("reim_type").equalsIgnoreCase("OTHER")) {
+					reim.setType(Type.OTHER);
+				}
 				
 				reim.setAmount(result.getDouble("reim_amount"));
 				reimList.add(reim);
@@ -137,14 +162,15 @@ public class ReimbursementDAO {
     public Reimbursement createReimbursement(Reimbursement reim) {
     	try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String sql = "INSERT INTO reimbursement (reim_status, reim_author,"
-					+ " reim_amount) VALUES "
-					+ "(?, ?, ?);";
+					+ " reim_type, reim_amount) VALUES "
+					+ "(?, ?, ?, ?);";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			int count = 0;
 			
 			statement.setString(++count, String.valueOf(reim.getStatus()));
-			statement.setString(++count, String.valueOf(reim.getAuthor()));
+			statement.setString(++count, String.valueOf(reim.getAuthor().getUsername()));
+			statement.setString(++count, String.valueOf(reim.getType()));
 			statement.setDouble(++count, reim.getAmount());
 			
 			statement.execute();
@@ -181,7 +207,19 @@ public class ReimbursementDAO {
 				reim.setAuthor(author1.get());
 				
 				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-				reim.setResolver(resolver.get());
+				if(!resolver.equals(Optional.empty())) {
+					reim.setResolver(resolver.get());
+				}
+				
+				if(result.getString("reim_type").equalsIgnoreCase("FOOD")) {
+					reim.setType(Type.FOOD);
+				} else if(result.getString("reim_type").equalsIgnoreCase("TRAVEL")) {
+					reim.setType(Type.TRAVEL);
+				} else if(result.getString("reim_type").equalsIgnoreCase("LODGING")) {
+					reim.setType(Type.LODGING);
+				} else if(result.getString("reim_type").equalsIgnoreCase("OTHER")) {
+					reim.setType(Type.OTHER);
+				}
 				
 				reim.setAmount(result.getDouble("reim_amount"));
 				reimList.add(reim);
@@ -221,6 +259,16 @@ public class ReimbursementDAO {
 				Optional<User> resolver1 = userDAO.getByUsername(result.getString("reim_resolver"));
 				reim.setResolver(resolver1.get());
 				
+				if(result.getString("reim_type").equalsIgnoreCase("FOOD")) {
+					reim.setType(Type.FOOD);
+				} else if(result.getString("reim_type").equalsIgnoreCase("TRAVEL")) {
+					reim.setType(Type.TRAVEL);
+				} else if(result.getString("reim_type").equalsIgnoreCase("LODGING")) {
+					reim.setType(Type.LODGING);
+				} else if(result.getString("reim_type").equalsIgnoreCase("OTHER")) {
+					reim.setType(Type.OTHER);
+				}
+				
 				reim.setAmount(result.getDouble("reim_amount"));
 				reimList.add(reim);
 			}
@@ -244,20 +292,32 @@ public class ReimbursementDAO {
 			while(result.next()) {
 				Reimbursement reim = new Reimbursement();
 				reim.setId(result.getInt("reim_id"));
-				if(result.getString("reim_status").equals("PENDING")) {
+				if(result.getString("reim_status").equalsIgnoreCase("PENDING")) {
 					reim.setStatus(Status.PENDING);
-				} else if(result.getString("reim_status").equals("APPROVED")) {
+				} else if(result.getString("reim_status").equalsIgnoreCase("APPROVED")) {
 					reim.setStatus(Status.APPROVED);
-				} else if(result.getString("reim_status").equals("DENIED")) {
+				} else if(result.getString("reim_status").equalsIgnoreCase("DENIED")) {
 					reim.setStatus(Status.DENIED);
 				}
 				
-//				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
-//				reim.setAuthor(author.get());
-//				
-//				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-//				reim.setResolver(resolver.get());
+				Optional<User> author = userDAO.getByUsername(result.getString("reim_author"));
+				reim.setAuthor(author.get());
 				
+				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
+				if(!resolver.equals(Optional.empty())) {
+					reim.setResolver(resolver.get());
+				}
+				
+				if(result.getString("reim_type").equalsIgnoreCase("FOOD")) {
+					reim.setType(Type.FOOD);
+				} else if(result.getString("reim_type").equalsIgnoreCase("TRAVEL")) {
+					reim.setType(Type.TRAVEL);
+				} else if(result.getString("reim_type").equalsIgnoreCase("LODGING")) {
+					reim.setType(Type.LODGING);
+				} else if(result.getString("reim_type").equalsIgnoreCase("OTHER")) {
+					reim.setType(Type.OTHER);
+				}
+					
 				reim.setAmount(result.getDouble("reim_amount"));
 				reimList.add(reim);
 			}

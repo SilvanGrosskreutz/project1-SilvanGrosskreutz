@@ -106,8 +106,8 @@ public class AbstractReimbursement {
         return "AbstractReimbursement{" +
                 "id=" + id +
                 ", status=" + status +
-                ", author=" + author +
-                ", resolver=" + resolver +
+                ", author=" + author.getUsername() +
+                ", resolver=" + resolver.getUsername() +
                 ", amount=" + amount +
                 '}';
     }

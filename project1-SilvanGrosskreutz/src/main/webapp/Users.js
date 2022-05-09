@@ -95,7 +95,7 @@ function gatherFm(){
     let fm = {
             username: userName,
             password: userPassword,
-            role: "Finance_Manager",
+            role: "FINANCE_MANAGER",
             firstName: firstname,
             lastName: lastname,
             eMail: eMail,
