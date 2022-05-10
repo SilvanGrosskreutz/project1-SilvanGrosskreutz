@@ -20,8 +20,9 @@ function populateReims(reims){
     for(let reim of reims){
         let row = document.createElement("tr");
         for(let cell in reim){
-            let td = document.createElement("td");
+            let td = document.createElement("td");       
             td.innerText = reim[cell];
+           
             row.appendChild(td);
         }
         tbody.appendChild(row);
