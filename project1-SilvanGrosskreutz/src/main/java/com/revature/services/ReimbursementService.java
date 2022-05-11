@@ -73,11 +73,14 @@ public class ReimbursementService {
     		throw new ReimbursementNotFoundException("Reimbursement request not in the list.");
     	}
     	
-    	if(unprocessedReimbursement.getResolver().equals(null)) {
-    		unprocessedReimbursement.setResolver(resolver);
-    	} else throw new ResolverIsNullException("Resolver is not null. Persistence unsuccessful");
+    	unprocessedReimbursement.setResolver(resolver);
+    	unprocessedReimbursement.setStatus(finalStatus);
     	
-        return unprocessedReimbursement;
+    	if(!reimDAO.update(unprocessedReimbursement).equals(null)) {
+    		return unprocessedReimbursement;
+    	} 
+    	
+    	return null;   
     }
     
     public Reimbursement getReimbursementById(int id){

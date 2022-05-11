@@ -24,8 +24,28 @@
         </table>
         <br>
         <br>
-        <button id="getReims">Click here to show all pending Reimbursements</button>
+        <button id="getReims">Click here to show all Reimbursements</button>
     </div>
+
+    <div>
+        <h2>Update Todo List</h2>
+    </div>
+      <div>
+        <form>
+          <label for="updateReimId">Id:</label>
+          <input type="number" name="updateReimId" id="updateReimId">
+          <label for="updateReimStatus">Status:</label>
+          <select name="updateReimStatus" id="updateReimStatus">
+            <option value="PENDING">Pending</option>
+            <option value="APPROVED">Approved</option>
+            <option value="DENIED">Denied</option>
+          </select>
+        </form>
+      </div>
+      <br>
+      <div>
+        <button id="updateReimBtn">Change Reimbursement Status</button>
+      </div>
     
     <script src="finance.js"></script>    
 </body>

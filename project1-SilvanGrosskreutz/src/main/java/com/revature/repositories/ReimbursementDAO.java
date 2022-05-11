@@ -45,7 +45,7 @@ public class ReimbursementDAO {
 				reim.setAuthor(author.get());
 				
 				Optional<User> resolver = userDAO.getByUsername(result.getString("reim_resolver"));
-				if(!resolver.equals(Optional.empty())) {
+				if(resolver.isPresent()) {
 					reim.setResolver(resolver.get());
 				}
 				
@@ -138,15 +138,16 @@ public class ReimbursementDAO {
     	try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String sql = "UPDATE reimbursement SET reim_status = ?,"
 					+ " reim_author = ?, reim_resolver = ?,"
-					+ " reim_amount = ?"
+					+ " reim_type = ?, reim_amount = ?"
 					+ " WHERE reim_id = ?;";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			int count = 0;
 			
 			statement.setString(++count, String.valueOf(unprocessedReimbursement.getStatus()));
-			statement.setString(++count, String.valueOf(unprocessedReimbursement.getAuthor()));
-			statement.setString(++count, String.valueOf(unprocessedReimbursement.getResolver()));
+			statement.setString(++count, String.valueOf(unprocessedReimbursement.getAuthor().getUsername()));
+			statement.setString(++count, String.valueOf(unprocessedReimbursement.getResolver().getUsername()));
+			statement.setString(++count, String.valueOf(unprocessedReimbursement.getType()));
 			statement.setDouble(++count, unprocessedReimbursement.getAmount());
 			statement.setInt(++count, unprocessedReimbursement.getId());
 			
@@ -281,7 +282,7 @@ public class ReimbursementDAO {
 	
 	public List<Reimbursement> getAllReimbursements(){
 	    try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String sql = "SELECT * FROM reimbursement;";
+			String sql = "SELECT * FROM reimbursement ORDER BY reim_id;";
 			
 			Statement statement = conn.createStatement();
 			
