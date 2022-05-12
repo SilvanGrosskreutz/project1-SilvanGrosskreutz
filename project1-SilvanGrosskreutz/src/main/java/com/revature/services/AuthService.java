@@ -2,13 +2,11 @@ package com.revature.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.revature.exceptions.NewUserHasNonZeroIdException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.exceptions.WrongPasswordOrUsernameException;
-import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 
@@ -68,20 +66,20 @@ public class AuthService {
      * 
      */
     
-    // TODO: User ID non zero after registration
     public User register(User userToBeRegistered){
     	if(userToBeRegistered.getId() != 0) {
 			throw new NewUserHasNonZeroIdException("User should have a ID of zero!");
 		}
-		if(!userDAO.getByUsername(userToBeRegistered.getUsername()).equals(Optional.empty())) {
+		if(userDAO.getByUsername(userToBeRegistered.getUsername()) != null) {
 			throw new UsernameNotUniqueException("Username has to be unique!");
 		}
-		if(userToBeRegistered.equals(null)) {
+		if(userDAO.create(userToBeRegistered) != null) {	
+	    	System.out.println("User registration successful!");
+	    	return userDAO.getByUsername(userToBeRegistered.getUsername()).get();
+		} else {
 			throw new RegistrationUnsuccessfulException();
 		}
-    	userDAO.create(userToBeRegistered);
-    	System.out.println("User registration successful!");
-    	return userDAO.getByUsername(userToBeRegistered.getUsername()).get();
+    	
     }
     
 

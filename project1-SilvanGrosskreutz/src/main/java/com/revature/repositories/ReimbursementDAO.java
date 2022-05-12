@@ -327,6 +327,6 @@ public class ReimbursementDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<Reimbursement>();
     }
 }

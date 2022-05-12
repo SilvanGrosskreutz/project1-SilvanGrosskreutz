@@ -40,11 +40,17 @@ public class UserService {
 	}
 
 	public Optional<User> getByUsername(String username) {
-		return userDAO.getByUsername(username);
+		User user = userDAO.getByUsername(username).get();
+		if(Optional.of(user).isPresent()) {
+			return Optional.of(user);
+		}
+		return Optional.empty();
 	}
 
 	public void createUser(User user) {	
-		userDAO.create(user);	
+		if(!userDAO.getByUsername(user.getUsername()).isPresent()) {
+			userDAO.create(user);		
+		} else throw new UsernameNotUniqueException();
 	}
 
 	
