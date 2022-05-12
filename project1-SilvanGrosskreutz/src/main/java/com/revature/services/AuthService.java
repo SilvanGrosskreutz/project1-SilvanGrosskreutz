@@ -40,7 +40,7 @@ public class AuthService {
     	List<User> userList = userDAO.getAllUser();
     	
     	for (User user : userList) {
-    		if(user.getUsername().equals(username) || user.geteMail().equals(username)) {
+    		if(user.getUsername().equals(username)) {
     			if (user.getPassword().equals(password)) {
     				return user;
 				} else throw new WrongPasswordOrUsernameException("Wrong password.");
@@ -70,16 +70,13 @@ public class AuthService {
     	if(userToBeRegistered.getId() != 0) {
 			throw new NewUserHasNonZeroIdException("User should have a ID of zero!");
 		}
-		if(userDAO.getByUsername(userToBeRegistered.getUsername()) != null) {
-			throw new UsernameNotUniqueException("Username has to be unique!");
+		String username = userToBeRegistered.getUsername();
+		if(userDAO.getByUsername(username).isPresent()) {
+			throw new UsernameNotUniqueException();
 		}
-		if(userDAO.create(userToBeRegistered) != null) {	
-	    	System.out.println("User registration successful!");
-	    	return userDAO.getByUsername(userToBeRegistered.getUsername()).get();
-		} else {
-			throw new RegistrationUnsuccessfulException();
-		}
-    	
+		userDAO.create(userToBeRegistered);
+	    System.out.println("User registration successful!");
+	    return userDAO.getByUsername(userToBeRegistered.getUsername()).get();
     }
     
 
