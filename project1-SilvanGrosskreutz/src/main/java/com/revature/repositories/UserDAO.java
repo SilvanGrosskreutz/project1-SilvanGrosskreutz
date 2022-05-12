@@ -1,9 +1,5 @@
 package com.revature.repositories;
 
-
-import com.revature.exceptions.NewUserHasNonZeroIdException;
-import com.revature.exceptions.RegistrationUnsuccessfulException;
-import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
