@@ -1,4 +1,4 @@
-# project1-SilvanGrosskreutz
+# project1-SilvanGrosskreutz - Expense Reimbursement System (ERS)
 
 ## Project Description
 My project is an Expense Reimbursement System (ERS). You can register as an Employee or as a Finance Manager. If you log in as a Employee you can create a Reimbursement
